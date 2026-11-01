@@ -1,5 +1,7 @@
 # merapi — API management from the terminal
 
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+
 `merapi` manages API documentation, tests and environments **from the CLI** — no web UI required. It is built for two kinds of users: humans who live in a terminal, and **AI agents** that connect through the built-in [MCP](https://modelcontextprotocol.io) server to maintain documentation and tests.
 
 - **Documentation** — edit an OpenAPI **3.1** document (`paths`, `components/schemas`, `securitySchemes`) with comment-preserving YAML edits, validate it (libOpenAPI), export interactive Swagger UI HTML, generate Markdown, or print ready-to-paste **code samples** (cURL, Go, Python, JavaScript) that include auth credential placeholders.
@@ -263,3 +265,31 @@ make demo     # builds and exercises the CLI in ./demo
 ```
 
 Architecture: `internal/spec` (comment-preserving OpenAPI editing + validation), `internal/runner` (scenario execution), `internal/envs` (environments + encrypted secrets), `internal/templ` (strict template resolution), `internal/docs` (Swagger UI/Markdown/code samples), `internal/mock` (deterministic mock server), `internal/gql` (GraphQL SDL parsing, validation and example generation), `internal/mcpserver` (MCP tools/resources), `internal/cli` (cobra commands). Design notes: [docs/design/graphql.md](docs/design/graphql.md), [docs/design/auth.md](docs/design/auth.md).
+
+## License
+
+Licensed under the **Apache License, Version 2.0** — see [LICENSE](LICENSE) for the full text and [NOTICE](NOTICE) for attribution.
+
+In short, you are free to:
+
+- **Use** merapi for any purpose, including commercial
+- **Copy, modify and redistribute** it (source or binary), including derived works
+- **Sell** products or services built on it
+
+Provided that you:
+
+- Keep the `LICENSE` and `NOTICE` files (and attribution) intact
+- State prominently that you modified the files (derivative works)
+- Include a copy of the Apache 2.0 license with any redistribution
+
+The license also grants an explicit **patent license** from contributors, with a patent-retaliation clause: if you sue a project contributor over patents related to the Work, your license to it terminates. The name "merapi" itself is **not** covered by the license — trademark use is separate (Section 6 of the license).
+
+merapi is provided "AS IS", without warranty or liability (Sections 7–8).
+
+### Contributing
+
+By contributing, you agree that your contributions are licensed under the same Apache License 2.0 (Section 5 of the license), without additional terms.
+
+### Third-party dependencies
+
+merapi builds on open-source Go libraries (cobra, libopenapi, yaml.v3, the MCP Go SDK, gqlparser, x/crypto, …), each under its own permissive license (MIT/Apache-2.0/BSD). Run `go-licenses ./...` for a full report.
