@@ -9,6 +9,19 @@
 - **Environments** — per-environment `base_url` + plain variables (committed) + **encrypted secrets** (AES-256-GCM, gitignored).
 - **AI agents** — `merapi mcp` exposes ~35 typed MCP tools + resources, so any MCP-capable agent can document, test and validate the API safely.
 
+## Problem statement
+
+Working with APIs today usually means juggling several heavyweight tools that don't share state:
+
+- **Documentation** lives in a GUI editor or a hosted platform (Swagger Editor, Stoplight, Postman cloud) — changes are awkward to review in a PR and often require an account.
+- **Mocking** needs a separate server (Prism, WireMock) configured from yet another place.
+- **Testing** happens in a different tool and format (Postman collections, Bruno) with its own environment/secrets story.
+- **Environments and secrets** scatter across `.env` files, shell exports and cloud workspaces.
+
+The result is slow feedback loops, configuration that doesn't merge cleanly, no single source of truth in git — and **no safe machine interface**: GUI and cloud tools expose nothing an AI agent can drive.
+
+merapi collapses this into **one git-friendly, terminal-first tool**. The OpenAPI 3.1 document, GraphQL SDL, test scenarios, environments and secrets are plain files in your repo — diffable, reviewable, mergeable. The same static binary validates the docs, runs the tests, serves a deterministic mock (with auth enforcement), renders documentation and code samples, and exposes an MCP server so humans *and* AI agents work through identical, lock-protected operations. No server, no account, no runtime besides the binary.
+
 ## Install
 
 ```bash
