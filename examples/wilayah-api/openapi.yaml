@@ -1,0 +1,218 @@
+openapi: 3.1.0
+info:
+  title: Indonesia Wilayah API
+  version: 0.1.0
+  description: |
+    API documentation for Indonesia Wilayah API, managed by merapi.
+servers:
+  - url: http://127.0.0.1:9090
+    description: Default server
+paths:
+  /provinces:
+    get:
+      operationId: getProvinces
+      summary: List provinces
+      description: Returns every province of Indonesia (BPS codes).
+      tags:
+        - provinces
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProvinceList'
+        "400":
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /provinces/{id}:
+    get:
+      operationId: getProvincesById
+      summary: Get a province
+      description: Fetch one province by its numeric id (same as its BPS code).
+      tags:
+        - provinces
+      parameters:
+        - name: id
+          in: path
+          description: Numeric id (BPS code).
+          example: "31"
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Province'
+        "404":
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /provinces/{id}/cities:
+    get:
+      operationId: getProvincesByIdCities
+      summary: List cities in a province
+      description: Returns the kabupaten/kota that belong to the province.
+      tags:
+        - provinces
+      parameters:
+        - name: id
+          in: path
+          description: Numeric id (BPS code).
+          example: "31"
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CityList'
+        "404":
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /cities:
+    get:
+      operationId: getCities
+      summary: List cities
+      description: Returns every kabupaten/kota, optionally filtered by ?provinceId=.
+      tags:
+        - cities
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CityList'
+        "400":
+          description: BadRequest
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      parameters:
+        - name: provinceId
+          in: query
+          description: Filter cities by province id (BPS code).
+          example: "31"
+          schema:
+            type: integer
+  /cities/{id}:
+    get:
+      operationId: getCitiesById
+      summary: Get a city
+      description: Fetch one city (kabupaten/kota) by id.
+      tags:
+        - cities
+      parameters:
+        - name: id
+          in: path
+          description: Numeric id (BPS code).
+          example: "3171"
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/City'
+        "404":
+          description: NotFound
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Province:
+      properties:
+        code:
+          example: "31"
+          type: string
+        id:
+          example: 31
+          type: integer
+        name:
+          example: DKI Jakarta
+          type: string
+      required:
+        - id
+        - code
+        - name
+      type: object
+    ProvinceList:
+      properties:
+        count:
+          example: 3
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/Province'
+          type: array
+      required:
+        - count
+        - data
+      type: object
+    City:
+      properties:
+        id:
+          example: 3171
+          type: integer
+        name:
+          example: Jakarta Pusat
+          type: string
+        provinceId:
+          example: 31
+          type: integer
+        type:
+          enum:
+            - kabupaten
+            - kota
+          example: kota
+          type: string
+      required:
+        - id
+        - name
+        - provinceId
+        - type
+      type: object
+    CityList:
+      properties:
+        count:
+          example: 2
+          type: integer
+        data:
+          items:
+            $ref: '#/components/schemas/City'
+          type: array
+      required:
+        - count
+        - data
+      type: object
+    Error:
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      required:
+        - code
+        - message
+      type: object

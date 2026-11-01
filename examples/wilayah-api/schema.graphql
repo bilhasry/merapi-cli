@@ -1,0 +1,50 @@
+"""GraphQL schema for Indonesia Wilayah API (BPS province/city codes)."""
+
+enum CityType {
+  KABUPATEN
+  KOTA
+}
+
+type Province {
+  id: ID!
+  code: String!
+  name: String!
+  cities(type: CityType): [City!]!
+}
+
+type City {
+  id: ID!
+  name: String!
+  provinceId: Int!
+  type: CityType!
+}
+
+type ProvinceList {
+  count: Int!
+  data: [Province!]!
+}
+
+type CityList {
+  count: Int!
+  data: [City!]!
+}
+
+type Query {
+  "All provinces"
+  provinces: ProvinceList!
+  "One province by BPS code"
+  province(id: ID!): Province
+  "All cities, optionally filtered by type"
+  cities(type: CityType): CityList!
+  "One city by BPS code"
+  city(id: ID!): City
+}
+
+input CreateProvinceInput {
+  code: String!
+  name: String!
+}
+
+type Mutation {
+  createProvince(input: CreateProvinceInput!): Province!
+}

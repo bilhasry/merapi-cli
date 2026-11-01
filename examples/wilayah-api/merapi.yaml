@@ -1,0 +1,7 @@
+name: Indonesia Wilayah API
+version: 1
+spec: openapi.yaml
+graphql: schema.graphql
+tests_dir: tests
+environments_dir: environments
+default_environment: dev
