@@ -375,7 +375,9 @@ Languages: `curl`, `go`, `python`, `javascript`.
 
 ## Developing merapi itself
 
-Go ≥ 1.24, module `github.com/bilhasry/merapi`.
+Go ≥ 1.24, module `github.com/bilhasry/merapi`. Human contributors: see
+[CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow (design-note-first
+pattern, PR gates, commit style).
 
 ```bash
 make build     # -> bin/merapi (version injected via ldflags)

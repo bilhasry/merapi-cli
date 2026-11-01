@@ -288,7 +288,9 @@ merapi is provided "AS IS", without warranty or liability (Sections 7–8).
 
 ### Contributing
 
-By contributing, you agree that your contributions are licensed under the same Apache License 2.0 (Section 5 of the license), without additional terms.
+Contributions are welcome under the same Apache 2.0 license (Section 5) — see
+[CONTRIBUTING.md](CONTRIBUTING.md) for the development setup, gates, conventions
+and PR checklist.
 
 ### Third-party dependencies
 
